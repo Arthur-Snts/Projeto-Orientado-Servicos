@@ -1,3 +1,3 @@
 # Projeto-Orientado-Servicos
 
-Matéria voltada á Serviços de Web
+Matéria do Curso Técnico voltada á Serviços de Web
