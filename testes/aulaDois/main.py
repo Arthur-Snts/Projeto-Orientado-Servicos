@@ -23,14 +23,18 @@ def cadastra_livro(livro_cadastra:Livro):
 
 @app.get('/livros', response_model=List[Livro])
 def lista_livros():
+    livros_mostrar = livros
+    for livro in livros:
+        if livro.disponivel == False:
+            livros_mostrar.pop(livro)
     return livros
 
 @app.get('/livro', response_model=Livro)
 def lista_livro(titulo:str):
     for livro in livros:
-        if livro.titulo == titulo:
+        if livro.titulo == titulo and livro.disponivel == True:
             return livro
-    raise HTTPException(status_code=404, detail="Livro não Existe")
+    raise HTTPException(status_code=404, detail="Livro não Existe ou não disponível")
 
 
 @app.post('/leitor')
@@ -44,7 +48,7 @@ def cadastra_leitor(leitor_cadastra:Leitor):
 def cadastra_emprestimo(livro_id:int, leitor_id:int):
     livro = None
     for livro_corrido in livros:
-        if livro_corrido.id == livro_id:
+        if livro_corrido.id == livro_id and livro_corrido.disponivel == True:
             livro = livro_corrido
     if livro == None:
        raise HTTPException(status_code=404, detail="Livro não Existe")    
