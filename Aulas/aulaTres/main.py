@@ -74,6 +74,7 @@ def emprestimo(leitor:str,livro:str, data_emprestimo:date, data_devolucao:date):
 
 
 
+
     
 
 
