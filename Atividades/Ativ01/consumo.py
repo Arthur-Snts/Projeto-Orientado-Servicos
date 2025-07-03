@@ -37,18 +37,22 @@ def excluir_livro(titulo):
         print(r.text)
 
 def atualizar_livro(titulo_velho):
-    titulo = input("Digite o Título novo: ")
-    ano = int(input("Digite o Ano novo: "))
-    edicao = int(input("Digite a Edição nova: "))
-    livro = {
-        "titulo":titulo,
-        "ano": ano,
-        "edicao":edicao
-    }
-    r = requests.put(f"{URL}/livros/{titulo_velho}", json=livro)
+    r = requests.get(f"{URL}/livros/{titulo_velho}")
     if r.status_code == 200:
-        print("Atualizado com Sucesso")
-    elif r.status_code == 404:
+        titulo = input("Digite o Título novo: ")
+        ano = int(input("Digite o Ano novo: "))
+        edicao = int(input("Digite a Edição nova: "))
+        livro = {
+            "titulo":titulo,
+            "ano": ano,
+            "edicao":edicao
+        }
+        r = requests.put(f"{URL}/livros/{titulo_velho}", json=livro)
+        if r.status_code == 200:
+            print("Atualizado com Sucesso")
+        elif r.status_code == 404:
+            print(r.text)
+    else:
         print(r.text)
 
 def menu(): 

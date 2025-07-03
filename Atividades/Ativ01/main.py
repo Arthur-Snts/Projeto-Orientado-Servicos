@@ -30,10 +30,8 @@ def criar_livro(livro:Livro):
 
 @app.put("/livros/{titulo}")
 def atualizar_livro(livro_atualizado:Livro, titulo:str):
-    for livro in livros:
+    for id, livro in enumerate(livros):
         if livro.titulo == titulo:
-            for id, livro in enumerate(livros):
-                if livro.titulo == titulo:
-                    livros[id] = livro_atualizado 
+            livros[id] = livro_atualizado 
     raise HTTPException(404,"Não localizado")
     
