@@ -3,6 +3,7 @@ from sqlmodel import Session, create_engine, SQLModel, select
 from fastapi import FastAPI, Depends
 from models import Aluno
 from contextlib import asynccontextmanager
+from fastapi.middleware.cors import CORSMiddleware
 
 urlsqlite = "sqlite:///banco.db"
 
@@ -29,6 +30,14 @@ async def lifespan(app:FastAPI): #Async usado para não ser executado antes da c
 
 
 app = FastAPI(lifespan=lifespan)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # ou ["*"] para liberar geral (menos seguro)
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get('/alunos')
 def alunos(session:SessionDep) -> List[Aluno]:
